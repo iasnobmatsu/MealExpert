@@ -1,0 +1,28 @@
+.signuplogin{
+    width:500px;
+    height:500px;
+    display:block;
+    margin:auto;
+    position:relative;
+    top:100px;
+    border:1px solid  #f3af4a;
+    box-shadow:4px 4px 4px  #f3af4a;
+    padding-bottom:2%;
+    border-radius: 10px;
+}
+
+.forms-title{
+    border-radius:10px;
+    background-color: #f3af4a;
+    height:100px;
+    color:white;
+    font-size:20px;
+    text-align:center;
+    vertical-align: center;
+    padding-top:37px;
+    margin-bottom:10px;
+}
+
+.forms-body{
+    margin:3%;
+}
