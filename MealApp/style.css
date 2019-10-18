@@ -26,3 +26,57 @@
 .forms-body{
     margin:3%;
 }
+
+
+.menu{
+    width:20%;
+    margin-left:2%;
+    /* background-color: #f3af4a; */
+    margin-top:50px;
+    position:fixed;
+    border-radius: 10px;
+   
+
+}
+
+.menu li{
+    border-bottom:1px #f3af4a solid;
+}
+.menu a{
+    color:#b96f00;
+}
+#appcont{
+    position:relative;
+    padding-top:20px;
+    width:50%;
+    margin-left:25%;
+    /* background-color: #f3af4a; */
+}
+
+table{
+    background-color: #f8f8f8;
+    padding:5%;
+    border-radius:10px;
+    margin-left:4%;
+    width:90%;
+    margin-bottom:2%;
+}
+th{
+   width:50%;
+   padding:1%;
+   border-right:1px solid #d68102;
+}
+td{
+    padding:1%;
+}
+
+.heading-table{
+    border-bottom:1px solid #d68205;
+    width:100%;
+    background-color: #fcd396;
+}
+
+#dateinput{
+    padding:1%;
+    font-size: 15px;
+}

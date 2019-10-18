@@ -1,26 +1,22 @@
 
 
-
-export async function createUser(username, password, email) {
+export async function loginUser(username, password) {
     try {
         const result = await axios({
             method: 'post',
-            url: 'http://localhost:3000/account/create',
+            url: 'http://localhost:3000/account/login',
             data: {
                 "name": username,
-                "pass": password,
-                "data": {
-                  "email":email
-                }
+                "pass": password
               }
         })
         // result = JSON.stringify(result);
-        console.log(result.data);
+        console.log(result.data.jwt);
+        return result.data.jwt
     } catch (error) {
         console.log(error);
     }
 }
-
 
 
 export async function getUserStatus(jwt) {
@@ -44,17 +40,16 @@ export async function getUserStatus(jwt) {
 // getUserStatus('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZXgiLCJkYXRhIjp7ImVtYWlsIjoieHh4QHguY29tIn0sImlhdCI6MTU3MTAwMzA0NiwiZXhwIjoxNTczNTk1MDQ2fQ._GVOTuIYfiOqWqQhu9J9CoC-k_moVKa4_HbuLx4wTVI');
 
 
-export async function signUpOnClick(){
-    let username=$('#signup-username').val();
-    let email=$('#signup-email').val();
-    let password=$('#signup-password').val();
-    createUser(username, password,email);
-    // console.log([username, email,password]);
+export async function loginOnClick(){
+    let username=$('#login-username').val();
+    let password=$('#login-password').val();
+    let jwt=loginUser(username, password);
+   
 } 
 
 
 
-$('#signup').click(signUpOnClick);
+$('#login').click(loginOnClick);
 
 $(document).ready(()=>{
      
