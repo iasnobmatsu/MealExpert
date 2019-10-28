@@ -1,0 +1,108 @@
+*{
+    margin:0;
+    padding:0;
+    font-family: 'Permanent Marker', cursive;
+
+}
+    
+.circlePic{
+    width: 50%;
+    height: 85%;
+    border: 1px solid black;
+    border-radius: 50%;
+    background-color:white; 
+    position: absolute;   
+    top: 50%;   
+    left: 50%;   
+    -webkit-transform: translate(-50%, -50%);   
+    -moz-transform: translate(-50%, -50%);   
+    -ms-transform: translate(-50%, -50%);   
+    -o-transform: translate(-50%, -50%);   
+    transform: translate(-50%, -50%);  
+    z-index: 1; 
+}
+.headername{
+    text-align: center;
+    margin-top:-55%;
+    z-index: 4; 
+    font-size: 650%;
+}
+.coverpic{
+    width: 100%;
+    height: 100%;
+    border-radius:50%; 
+    opacity: 0.3;
+    z-index: 2; 
+
+}
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0%;
+    padding: 0%;
+}
+
+.main {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 0; 
+
+}
+
+.quarter-div {
+    width: 50%;
+    height: 50%;
+    float: left;
+
+}
+.analysis {
+
+}
+.analysis>p{
+    font-size: 300%;
+    margin-top:20%;
+    margin-left: 20%; 
+    font-family: 'Satisfy', cursive;
+
+}
+
+.record {
+    background-color: #f5d062;
+}
+.record>p{
+    font-size: 300%;
+    margin-top:20%;
+    margin-left: 55%; 
+    color: white;
+    font-family: 'Satisfy', cursive;
+
+}
+
+.planning {
+    background-color: #f5d062;
+
+}
+.planning>p{
+    font-size: 300%;
+    margin-top:20%;
+    margin-left: 20%; 
+    color: white;
+    font-family: 'Satisfy', cursive;
+
+}
+
+
+.login {
+
+}
+.login>a{
+    text-decoration: none;
+    color: black;
+}
+.login>a>p{
+    font-size: 300%;
+    margin-top:20%;
+    margin-left: 55%; 
+    font-family: 'Satisfy', cursive;
+}
