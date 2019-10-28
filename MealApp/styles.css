@@ -6,8 +6,8 @@
 }
     
 .circlePic{
-    width: 50%;
-    height: 85%;
+    width: 30%;
+    height: 55%;
     border: 1px solid black;
     border-radius: 50%;
     background-color:white; 
@@ -20,21 +20,34 @@
     -o-transform: translate(-50%, -50%);   
     transform: translate(-50%, -50%);  
     z-index: 1; 
+    background-image: url("../MealApp/assets/maincover.png");
+    background-size: cover;
 }
-.headername{
-    text-align: center;
-    margin-top:-55%;
-    z-index: 4; 
-    font-size: 650%;
-}
-.coverpic{
-    width: 100%;
-    height: 100%;
-    border-radius:50%; 
-    opacity: 0.3;
-    z-index: 2; 
+.circlePic:hover{
+
+    /* animation: trans 1s ease-in; */
+    width:40%;
+    height:75%;
+    transition: 1s ease-in-out;
 
 }
+
+.headername{
+    text-align: center;
+    margin-top:40%;
+    margin-left:30%;
+    color:white;
+    background-color: black;
+    width: 40%;
+    font-size: 50px;
+    line-height: 90%;
+    padding-top:2%;
+    padding-bottom:2%;
+    border-radius:5px;
+
+}
+
+
 body {
     width: 100%;
     height: 100%;
@@ -59,21 +72,37 @@ body {
 .analysis {
 
 }
-.analysis>p{
+.analysis>h3{
     font-size: 300%;
-    margin-top:20%;
-    margin-left: 20%; 
+    margin-top:15%;
+    margin-left: 25%; 
     font-family: 'Satisfy', cursive;
+
+}
+.analysis>h3:hover{
+    color:#f5d062;
+
+}
+.login h3:hover{
+    color:#f5d062;
+
+}
+.record h3:hover{
+    color:black;
+
+}
+.planning h3:hover{
+    color:black;
 
 }
 
 .record {
     background-color: #f5d062;
 }
-.record>p{
+.record>h3{
     font-size: 300%;
-    margin-top:20%;
-    margin-left: 55%; 
+    margin-top:15%;
+    margin-left: 45%; 
     color: white;
     font-family: 'Satisfy', cursive;
 
@@ -83,10 +112,10 @@ body {
     background-color: #f5d062;
 
 }
-.planning>p{
+.planning>h3{
     font-size: 300%;
     margin-top:20%;
-    margin-left: 20%; 
+    margin-left: 25%; 
     color: white;
     font-family: 'Satisfy', cursive;
 
@@ -100,9 +129,38 @@ body {
     text-decoration: none;
     color: black;
 }
-.login>a>p{
+.login>a>h3{
     font-size: 300%;
     margin-top:20%;
-    margin-left: 55%; 
+    margin-left: 45%; 
     font-family: 'Satisfy', cursive;
+}
+.record>p{
+    font-family: Arial, Helvetica, sans-serif;
+    width:40%;
+    margin-left:30%;
+    text-align: center;
+    color:white;
+}
+.analysis>p{
+    font-family: Arial, Helvetica, sans-serif;
+    width:40%;
+    margin-left:15%;
+    text-align: center;
+    color:black;
+}
+.login>p{
+    font-family: Arial, Helvetica, sans-serif;
+    width:40%;
+    margin-left:30%;
+    text-align: center;
+    color:black;
+}
+
+.planning>p{
+    font-family: Arial, Helvetica, sans-serif;
+    width:40%;
+    margin-left:15%;
+    text-align: center;
+    color:white;
 }
