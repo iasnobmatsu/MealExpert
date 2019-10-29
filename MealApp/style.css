@@ -11,16 +11,19 @@
     border-radius: 10px;
 }
 
+
+
 .forms-title{
     border-radius:10px;
     background-color: #f3af4a;
     height:100px;
     color:white;
-    font-size:20px;
+    font-size:30px;
     text-align:center;
     vertical-align: center;
     padding-top:37px;
     margin-bottom:10px;
+    font-family: 'Permanent Marker', cursive;
 }
 
 .forms-body{
@@ -79,4 +82,15 @@ td{
 #dateinput{
     padding:1%;
     font-size: 15px;
+}
+.active{
+    background-color:#f5d062;
+    color:white;
+}
+.active a{
+    color:white;
+}
+
+.title{
+    font-family: 'Permanent Marker', cursive;
 }

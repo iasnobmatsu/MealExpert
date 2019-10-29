@@ -20,7 +20,7 @@
     -o-transform: translate(-50%, -50%);   
     transform: translate(-50%, -50%);  
     z-index: 1; 
-    background-image: url("../MealApp/assets/maincover.png");
+    background-image: url("../assets/maincover.png");
     background-size: cover;
 }
 .circlePic:hover{
