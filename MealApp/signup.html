@@ -26,7 +26,7 @@
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input id='signup-username' class="input" type="text" placeholder="Input Username" value=''>
+                        <input id='signup-username' class="input" type="text" placeholder="Input Username" value='' required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>
@@ -36,7 +36,7 @@
                 <div class="field">
                     <label class="label">Email</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input id='signup-email' class="input" type="email" placeholder="Input Email" value="">
+                        <input id='signup-email' class="input" type="email" placeholder="Input Email" value="" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-envelope"></i>
                         </span>
@@ -47,7 +47,7 @@
                 <div class="field">
                     <label class="label">Password</label>
                     <p class="control has-icons-left">
-                        <input id='signup-password' class="input" type="password" placeholder="Password">
+                        <input id='signup-password' class="input" type="password" placeholder="Password" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -58,7 +58,7 @@
                 <div class="field">
                     <label class="label">Confirm Password</label>
                     <p class="control has-icons-left">
-                        <input class="input" type="password" placeholder="Password">
+                        <input id='confirm' class="input" type="password" placeholder="Password" required>
                         <span class="icon is-small is-left">
                             <i class="fas fa-lock"></i>
                         </span>
@@ -72,9 +72,11 @@
                         <button id='signup' class="button is-outlined is-link">SignUp</button>
                     </div>
                     <div class="control">
-                        <button class="button is-text has-text-dark">Already have an account? Login In.</button>
+                        <a href='login.html' class="button is-text has-text-dark">Already have an account? Login In.</a>
                     </div>
                 </div>
+
+                <div class='warning-cont'></div>
             </div>
     </div>
 
@@ -82,7 +84,7 @@
 
     <script src="node_modules/jquery/dist/jquery.js"></script>
     <script src="node_modules/axios/dist/axios.js"></script>
-    <script src="signup.js" type="module"></script>
+    <script src="script.js" type="module"></script>
 </body>
 
 </html>
