@@ -225,7 +225,7 @@ export async function loginOnClick(){
 
     if (loginreturn!='error'){
         newjwt=loginreturn.data.jwt;
-        renderRecord();
+        await renderRecord();
         
     }
    
@@ -236,7 +236,7 @@ $('body').on('click', '#login', loginOnClick);
 
 
 //record================================================================================================\
-export function renderRecord(){
+export async function renderRecord(){
     $('#root').empty();
     $('#root').append($(`
     <div class="menu">
@@ -268,7 +268,7 @@ export function renderRecord(){
         <div class="field">
             <label class="label"> Add Consumed Meal:</label>
             <p class="control has-icons-left">
-                <input class="input" placeholder="Meal">
+                <input id='food' class="input" placeholder="Meal">
                 <span class="icon is-small is-left">
                     <i class="fas fa-utensils"></i>
                 </span>
@@ -278,7 +278,7 @@ export function renderRecord(){
         <div class="field">
             <label class="label"> Add Calories:</label>
             <p class="control has-icons-left">
-                <input class="input" placeholder="Calories">
+                <input id='cal' class="input" placeholder="Calories">
                 <span class="icon is-small is-left">
                     <i class="fas fa-utensils"></i>
                 </span>
@@ -286,7 +286,7 @@ export function renderRecord(){
         </div>
 
         <div class="select field">
-            <select>
+            <select id='type'>
                 <option>breakfast</option>
                 <option>lunch</option>
                 <option>dinner</option>
@@ -304,29 +304,75 @@ export function renderRecord(){
     </div>
 
 </div>`));
+
+
+
+    let today=new Date();
+    let year=today.getFullYear();
+    let month=today.getMonth()+1;
+    if (month<10){
+        month='0'+month;
+    }
+    let day=today.getDate();
+    if (day<10){
+        day='0'+day;
+    }
+    today=''+year+month+day;
+
+
+    await rendermeals(newjwt, today);
 }
 
-export function rendermeals(){
 
-   let content=$(``);
+export async function rendermeals(jwt, date){
+   let meals=await getMeals(jwt, date);
+   let mealkeys=Object.keys(meals);
+   let cont=$(`<div id='meal-table'></div>`)
+   for (let i=0;i<mealkeys.length;i++){
+        let onemeal=$(`<table class='${mealkeys[i]}'>
+            <tr class="heading-table"><th>${mealkeys[i]}</th></tr></table>`);
+        for (let j=0;j<meals[mealkeys[i]].items.length;j++){
+            onemeal.append($(`<tr>
+            <th>${meals[mealkeys[i]].items[j].food}</th>
+            <td>${meals[mealkeys[i]].items[j].calorie} cal</td>
+            </tr>`))
+        }
+        cont.append(onemeal);
+   }
 
-return content;
+   $('#appcont').append(cont)
 }
 
-//date--type--foodlist
-//in future change into date-indexed objects, note new Date() also has a timestamp
-export async function createMealRecord(jwt){
-    let m=new Meal(new Date(),'breakfast');
+export async function getMeals(jwt,date){
+    try{
+        const result = await axios({
+            method: 'get',
+            headers:{
+                "Authorization": "Bearer "+jwt
+            },
+            url: 'http://localhost:3000/user/record/'+date,      
+        })
+        console.log(result.data.result);
+        return result.data.result;
+    }catch(error){
+            console.log(error);
+    }
+}
+
+
+//new food object for a date type
+export async function createMealRecord(jwt, date, type, food, calorie){
+    let datekey=date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
     try{
     const result = await axios({
         method: 'post',
         headers:{
             "Authorization": "Bearer "+jwt
         },
-        url: 'http://localhost:3000/user/record',
+        url: 'http://localhost:3000/user/record/'+datekey+'/'+type,
         data: {
             "data": {
-                records:[m]
+                items:[{food,calorie}]
             }
           }
           
@@ -339,7 +385,43 @@ export async function createMealRecord(jwt){
 
 }
 
+//use this one, does not override all
+//add food object for a date type
+export async function createAddMealRecord(jwt, date, type, food, calorie){
+    try{
+    const result = await axios({
+        method: 'post',
+        headers:{
+            "Authorization": "Bearer "+jwt
+        },
+        url: 'http://localhost:3000/user/record/'+date+'/'+type+'/items',
+        data: {
+            "type": "merge",
+            "data": [{food,calorie}],
+            
+          }
+          
+    })
+    console.log(result);
+    }catch(error){
+        console.log(error);
+    }
+    
+
+}
+
+
+
 $('body').on('click','#addmeal', async()=>{
-    console.log(newjwt);
-    createMealRecord(newjwt);
+    let datearray=$('#dateinput').val().match(/[0-9]*/g);
+    let date=datearray.reduce(function reducer(acc, cur){
+        return acc+cur;
+    },"");
+    let food=$('#food').val();
+    let cal=$('#cal').val();
+    let type=$('#type option:selected').text();
+    // console.log(date, food, cal, type);
+    // createAddMealRecord(newjwt, date, type,food,cal);
+    let meals=await getMeals(newjwt,20191109);
+    console.log(Object.keys(meals).length);
 });
