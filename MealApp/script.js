@@ -1,17 +1,16 @@
 import Meal from "../meal.js";
 let newjwt;
-$(document).ready(()=>{
-    // $('#appcont').append(rendermeals());
-    newjwt='';
+$(document).ready(() => {
+    newjwt = '';
     renderlogin();
-   
+
 });
 
 
 
 // signup=====================================================================================
 
-export function rendersignup(){
+export function rendersignup() {
     $('#root').empty();
     $('#root').append($(`    <div class='signuplogin'>    
     <h2 class='forms-title'>MealExpert Sign Up</h3>
@@ -83,15 +82,15 @@ export async function createUser(username, password, email) {
                 "name": username,
                 "pass": password,
                 "data": {
-                  "email":email
+                    "email": email
                 }
-              }
+            }
         })
-        
-       return result;
+
+        return result;
     } catch (error) {
-       $('.warning-cont').empty().append($(`<p class='has-background-danger has-text-white'>${error}. Use other usernames.</p>`)); 
-       return 'error';
+        $('.warning-cont').empty().append($(`<p class='has-background-danger has-text-white'>${error}. Use other usernames.</p>`));
+        return 'error';
     }
 }
 
@@ -102,12 +101,12 @@ export async function getUserStatus(jwt) {
         const result = await axios({
             method: 'get',
             url: 'http://localhost:3000/account/status',
-            headers:{
-                "Authorization": "Bearer "+jwt
+            headers: {
+                "Authorization": "Bearer " + jwt
             },
         })
-        
-        console.log(result.data);
+
+        // console.log(result.data);
     } catch (error) {
         console.log(error);
     }
@@ -118,41 +117,39 @@ export async function getUserStatus(jwt) {
 // getUserStatus('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoibmFtZXgiLCJkYXRhIjp7ImVtYWlsIjoieHh4QHguY29tIn0sImlhdCI6MTU3MTAwMzA0NiwiZXhwIjoxNTczNTk1MDQ2fQ._GVOTuIYfiOqWqQhu9J9CoC-k_moVKa4_HbuLx4wTVI');
 
 
-export async function signUpOnClick(){
-    let username=$('#signup-username').val();
-    let email=$('#signup-email').val();
-    let password=$('#signup-password').val();
-    let password2=$('#confirm').val();
-    if (username==''||email==''||password==''||password2==''){
-        console.log('empty field')
+export async function signUpOnClick() {
+    let username = $('#signup-username').val();
+    let email = $('#signup-email').val();
+    let password = $('#signup-password').val();
+    let password2 = $('#confirm').val();
+    if (username == '' || email == '' || password == '' || password2 == '') {
         $('.warning-cont').empty().append('<p class="has-background-danger has-text-white">All fields must be filled</p>')
-    }else if (password!==password2){
-        console.log('no match')
+    } else if (password !== password2) {
         $('.warning-cont').empty().append('<p class="has-background-danger has-text-white">Your password does not match.</p>')
-    }else{
+    } else {
         document.getElementById('confirm').setCustomValidity('');
-        let createduser=await createUser(username, password,email);
-        console.log(createduser);
-        if (createduser!='error' && createduser.data.status=="Successfully made account"){
+        let createduser = await createUser(username, password, email);
+        if (createduser != 'error' && createduser.data.status == "Successfully made account") {
             $('.forms-body').empty().append($(`<p class='has-background-success'><a class='redirect-login has-text-white'>You have signed up successfully!. Click to login!.</a></p>`))
         }
-    } 
-} 
+    }
+}
 
 
-$('input').on('change',()=>{ 
+$('input').on('change', () => {
     $('.warning-cont').empty();
 })
 
 
-$('body').on('click','#signup',signUpOnClick);
+$('body').on('click', '#signup', signUpOnClick);
 
-$('body').on('click','.redirect-login',renderlogin);
-$('body').on('click','.redirect-signup',rendersignup);
+$('body').on('click', '.redirect-login', renderlogin);
+$('body').on('click', '.redirect-signup', rendersignup);
 
 
 //login======================================================================================
-export function renderlogin(){
+export function renderlogin() {
+
     $('#root').empty();
     $('#root').append($(`  <div class='signuplogin'>  
         <h2 class='forms-title'>MealExpert Login</h3>
@@ -192,6 +189,9 @@ export function renderlogin(){
 
 
                 <div class='warning-cont'></div>
+
+
+                
             </div></div>`));
 
 }
@@ -204,7 +204,7 @@ export async function loginUser(username, password) {
             data: {
                 "name": username,
                 "pass": password
-              }
+            }
         })
         // console.log(result.data.jwt);
         return result;
@@ -218,25 +218,39 @@ export async function loginUser(username, password) {
 
 
 
-export async function loginOnClick(){
-    let username=$('#login-username').val();
-    let password=$('#login-password').val();
-    let loginreturn=await loginUser(username, password);
+export async function loginOnClick() {
+    let username = $('#login-username').val();
+    let password = $('#login-password').val();
+    let loginreturn = await loginUser(username, password);
 
-    if (loginreturn!='error'){
-        newjwt=loginreturn.data.jwt;
+    if (loginreturn != 'error') {
+        newjwt = loginreturn.data.jwt;
         await renderRecord();
-        
+
     }
-   
-} 
+
+}
 
 
 $('body').on('click', '#login', loginOnClick);
 
 
 //record================================================================================================\
-export async function renderRecord(){
+export async function renderRecord() {
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1;
+    if (month < 10) {
+        month = '0' + month;
+    }
+    let day = today.getDate();
+    if (day < 10) {
+        day = '0' + day;
+    }
+    today = '' + year + month + day;
+    let defaultdate = "" + year + "-" + month + "-" + day;
+
     $('#root').empty();
     $('#root').append($(`
     <div class="menu">
@@ -257,7 +271,7 @@ export async function renderRecord(){
             <label class="label"> Select A Date to View Meals</label>
             <p class="control has-text-centered has-icons-left">
                     <i class="fas fa-calendar-day"></i>
-                <input id='dateinput' type="date">
+                <input id='dateinput' type="date" value=${defaultdate}>
 
             </p>
 
@@ -266,9 +280,19 @@ export async function renderRecord(){
 
     <div class='forms-body editform'>
         <div class="field">
-            <label class="label"> Add Consumed Meal:</label>
+            <label class="label"> Add Consumed Food Item:</label>
             <p class="control has-icons-left">
                 <input id='food' class="input" placeholder="Meal">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-utensils"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label"> Add Amount:</label>
+            <p class="control has-icons-left">
+                <input id='amount' class="input" placeholder="Amount in grams">
                 <span class="icon is-small is-left">
                     <i class="fas fa-utensils"></i>
                 </span>
@@ -303,125 +327,181 @@ export async function renderRecord(){
 
     </div>
 
+    <div id='rendercont'></div>
+    <button id='exte'>Add External</button>
 </div>`));
 
 
-
-    let today=new Date();
-    let year=today.getFullYear();
-    let month=today.getMonth()+1;
-    if (month<10){
-        month='0'+month;
-    }
-    let day=today.getDate();
-    if (day<10){
-        day='0'+day;
-    }
-    today=''+year+month+day;
 
 
     await rendermeals(newjwt, today);
 }
 
 
-export async function rendermeals(jwt, date){
-   let meals=await getMeals(jwt, date);
-   let mealkeys=Object.keys(meals);
-   let cont=$(`<div id='meal-table'></div>`)
-   for (let i=0;i<mealkeys.length;i++){
-        let onemeal=$(`<table class='${mealkeys[i]}'>
-            <tr class="heading-table"><th>${mealkeys[i]}</th></tr></table>`);
-        for (let j=0;j<meals[mealkeys[i]].items.length;j++){
+export async function rendermeals(jwt, date) {
+    $('#rendercont').empty();
+    let meals = await getMeals(jwt, date);
+    let mealkeys = Object.keys(meals);
+    let cont = $(`<div id='meal-table'></div>`)
+
+    for (let i = 0; i < mealkeys.length; i++) {
+        let onemeal = $(`<table class='${mealkeys[i]}'>
+            <tr class="heading-table"><th>${mealkeys[i]}</th><td>calories</td><td>amount</td></tr></table>`);
+        for (let j = 0; j < meals[mealkeys[i]].items.length; j++) {
             onemeal.append($(`<tr>
             <th>${meals[mealkeys[i]].items[j].food}</th>
             <td>${meals[mealkeys[i]].items[j].calorie} cal</td>
+            <td>${meals[mealkeys[i]].items[j].amount} grams</td>
             </tr>`))
         }
         cont.append(onemeal);
-   }
+    }
 
-   $('#appcont').append(cont)
+    $('#rendercont').empty().append(cont)
 }
 
-export async function getMeals(jwt,date){
-    try{
+export async function getMeals(jwt, date) {
+    try {
         const result = await axios({
             method: 'get',
-            headers:{
-                "Authorization": "Bearer "+jwt
+            headers: {
+                "Authorization": "Bearer " + jwt
             },
-            url: 'http://localhost:3000/user/record/'+date,      
+            url: 'http://localhost:3000/user/record/' + date,
         })
-        console.log(result.data.result);
+        // console.log(result.data.result);
         return result.data.result;
-    }catch(error){
-            console.log(error);
+    } catch (error) {
+        console.log(error);
     }
 }
 
 
 //new food object for a date type
-export async function createMealRecord(jwt, date, type, food, calorie){
-    let datekey=date.getFullYear()+'-'+(date.getMonth()+1)+'-'+date.getDate()
-    try{
-    const result = await axios({
-        method: 'post',
-        headers:{
-            "Authorization": "Bearer "+jwt
-        },
-        url: 'http://localhost:3000/user/record/'+datekey+'/'+type,
-        data: {
-            "data": {
-                items:[{food,calorie}]
+export async function createMealRecord(jwt, date, type, food, amount, calorie) {
+    let datekey = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    try {
+        const result = await axios({
+            method: 'post',
+            headers: {
+                "Authorization": "Bearer " + jwt
+            },
+            url: 'http://localhost:3000/user/record/' + datekey + '/' + type,
+            data: {
+                "data": {
+                    items: [{
+                        food,
+                        calorie,
+                        amount
+                    }]
+                }
             }
-          }
-          
-    })
-    console.log(result);
-    }catch(error){
+
+        })
+        // console.log(result);
+    } catch (error) {
         console.log(error);
     }
-    
+
 
 }
 
 //use this one, does not override all
 //add food object for a date type
-export async function createAddMealRecord(jwt, date, type, food, calorie){
-    try{
-    const result = await axios({
-        method: 'post',
-        headers:{
-            "Authorization": "Bearer "+jwt
-        },
-        url: 'http://localhost:3000/user/record/'+date+'/'+type+'/items',
-        data: {
-            "type": "merge",
-            "data": [{food,calorie}],
-            
-          }
-          
-    })
-    console.log(result);
-    }catch(error){
+export async function createAddMealRecord(jwt, date, type, food, amount, calorie) {
+    try {
+        const result = await axios({
+            method: 'post',
+            headers: {
+                "Authorization": "Bearer " + jwt
+            },
+            url: 'http://localhost:3000/user/record/' + date + '/' + type + '/items',
+            data: {
+                "type": "merge",
+                "data": [{
+                    food,
+                    calorie,
+                    amount
+                }],
+
+            }
+
+        })
+        // console.log(result);
+    } catch (error) {
         console.log(error);
     }
-    
 
+    rendermeals(jwt, date);
 }
 
 
 
-$('body').on('click','#addmeal', async()=>{
-    let datearray=$('#dateinput').val().match(/[0-9]*/g);
-    let date=datearray.reduce(function reducer(acc, cur){
-        return acc+cur;
-    },"");
-    let food=$('#food').val();
-    let cal=$('#cal').val();
-    let type=$('#type option:selected').text();
-    // console.log(date, food, cal, type);
-    // createAddMealRecord(newjwt, date, type,food,cal);
-    let meals=await getMeals(newjwt,20191109);
-    console.log(Object.keys(meals).length);
+$('body').on('click', '#addmeal', async () => {
+    let datearray = $('#dateinput').val().match(/[0-9]*/g);
+    let date = datearray.reduce(function reducer(acc, cur) {
+        return acc + cur;
+    }, "");
+    let food = $('#food').val();
+    let cal = $('#cal').val();
+    let am = $('#amount').val();
+    let type = $('#type option:selected').text();
+    createAddMealRecord(newjwt, date, type, food, am, cal);
+    // let meals = await getMeals(newjwt, 20191109);
+    // await rendermeals(newjwt, date);
+});
+
+$('body').on('change', '#dateinput', async () => {
+    let datearray = $('#dateinput').val().match(/[0-9]*/g);
+    let date = datearray.reduce(function reducer(acc, cur) {
+        return acc + cur;
+    }, "");
+    await rendermeals(newjwt, date);
+});
+
+
+export async function deleteWholeRecord(jwt) {
+    let result = await axios({
+        url: 'http://localhost:3000/user/record',
+        headers: {
+            "Authorization": "Bearer " + jwt
+        },
+        method: "delete",
+
+    });
+}
+export async function deleteOneMeal(jwt, date, meal) {
+    let result = await axios({
+        url: 'http://localhost:3000/user/record/'+date+"/"+meal,
+        headers: {
+            "Authorization": "Bearer " + jwt
+        },
+        method: "delete",
+
+    });
+}
+
+
+//=======================================================================================
+//third party api   10 request per min
+//edamam
+//app id 69cfcea5
+//key 86e2f01fd5cb3ec9e7cd96e1cc7a7f9f
+
+export async function getFoodExternal(food_item) {
+    let result = await axios({
+        method: 'get',
+        url: "https://api.edamam.com/api/food-database/parser",
+        params: {
+            app_id: "69cfcea5",
+            app_key: "86e2f01fd5cb3ec9e7cd96e1cc7a7f9f",
+            ingr: food_item,
+        }
+    });
+    console.log(result);
+}
+
+$('body').on('click', '#exte', async () => {
+    // await getFoodExternal('apple');
+    await deleteWholeRecord(newjwt);
 });
