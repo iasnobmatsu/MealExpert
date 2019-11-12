@@ -485,8 +485,6 @@ export async function deleteOneMeal(jwt, date, meal) {
 //=======================================================================================
 //third party api   10 request per min
 //edamam
-//app id 69cfcea5
-//key 86e2f01fd5cb3ec9e7cd96e1cc7a7f9f
 
 export async function getFoodExternal(food_item) {
     let result = await axios({
@@ -494,7 +492,7 @@ export async function getFoodExternal(food_item) {
         url: "https://api.edamam.com/api/food-database/parser",
         params: {
             app_id: "69cfcea5",
-            app_key: "86e2f01fd5cb3ec9e7cd96e1cc7a7f9f",
+            app_key: "",
             ingr: food_item,
         }
     });
@@ -502,6 +500,6 @@ export async function getFoodExternal(food_item) {
 }
 
 $('body').on('click', '#exte', async () => {
-    // await getFoodExternal('apple');
-    await deleteWholeRecord(newjwt);
+    await getFoodExternal('apple');
+    // await deleteWholeRecord(newjwt);
 });
