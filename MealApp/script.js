@@ -1,7 +1,9 @@
 import Meal from "../meal.js";
 let newjwt;
+let useDatabase;
 $(document).ready(() => {
     newjwt = '';
+    useDatabase=true;
     renderlogin();
 
 });
@@ -56,6 +58,7 @@ export function rendersignup() {
                     <i class="fas fa-lock"></i>
                 </span>
             </p>
+            
         </div>
 
 
@@ -279,6 +282,15 @@ export async function renderRecord() {
     </div>
 
     <div class='forms-body editform'>
+    <div class="tabs is-centered">
+  <ul>
+    <li class='has-text-small is-active'><a id='database'>Use Database</a></li>
+    <li class="has-text-small"><a id='own'>Create Your Own</a></li>
+   
+
+  </ul>
+</div>
+
         <div class="field">
             <label class="label"> Add Consumed Food Item:</label>
             <p class="control has-icons-left">
@@ -287,6 +299,7 @@ export async function renderRecord() {
                     <i class="fas fa-utensils"></i>
                 </span>
             </p>
+            <div class='auto-cont'></div>
         </div>
 
         <div class="field">
@@ -354,8 +367,13 @@ export async function rendermeals(jwt, date) {
             <td>${meals[mealkeys[i]].items[j].amount} grams</td>
             </tr>`))
         }
-        cont.append(onemeal);
+        
+        let adddelete=$(`<div class='${mealkeys[i]}-cont meals-cont'><button data-date=${date} data-meal=${mealkeys[i]} class=" deletemeal is-outlined button is-small is-dark">Delete</button></div>`);
+        adddelete.append(onemeal);
+        cont.append(adddelete);
     }
+
+    
 
     $('#rendercont').empty().append(cont)
 }
@@ -482,24 +500,118 @@ export async function deleteOneMeal(jwt, date, meal) {
 }
 
 
+$('body').on('click','.deletemeal',async(e)=>{
+    let date=e.target.dataset.date;
+    let meal=e.target.dataset.meal;
+    await deleteOneMeal(newjwt, date, meal);
+    await renderRecord();
+
+});
+
+
 //=======================================================================================
 //third party api   10 request per min
 //edamam
+//it has custom auto-complete function
 
+export async function getAppid(){
+    let result = await axios({
+        method: 'get',
+        url: "http://localhost:3000/public/appid",
+    });
+    return result.data.result;
+}
+
+export async function getKey(){
+    let result = await axios({
+        method: 'get',
+        url: "http://localhost:3000/public/key",
+    });
+    return result.data.result;
+}
+
+//get food autocomplete
+export async function getFoodAuto(food_item) {
+    let key=await getKey();
+    let appid=await getAppid();
+    
+    let result = await axios({
+        method: 'get',
+        url: "http://api.edamam.com/auto-complete",
+        params: {
+            app_id: appid,
+            app_key: key,
+            q: food_item,
+        }
+    });
+    // console.log(result.data);
+    return result.data;
+}
+
+
+//get food w/ nu
 export async function getFoodExternal(food_item) {
+    let key=await getKey();
+    let appid=await getAppid();
+    
     let result = await axios({
         method: 'get',
         url: "https://api.edamam.com/api/food-database/parser",
         params: {
-            app_id: "69cfcea5",
-            app_key: "",
+            app_id: appid,
+            app_key: key,
+            ingr: food_item,
+        }
+    });
+    console.log(result.data.parsed);
+    return result.data.parsed;
+}
+
+//use this method for get nutrients--not finished yet
+export async function getNutExternal(food_item) {
+    let key=await getKey();
+    let appid=await getAppid();
+    
+    let result = await axios({
+        method: 'get',
+        url: "https://api.edamam.com/api/food-database/nutrients",
+        params: {
+            app_id: appid,
+            app_key: key,
             ingr: food_item,
         }
     });
     console.log(result);
+    return result;
 }
 
+
+$('body').on('keyup','#food',async()=>{
+    // console.log($('#food').val());
+    let fillarray=await getFoodAuto($('#food').val());
+    let fill=$(`<div></div>`);
+    if (fillarray.length!=0){
+        for (let i=0;i<fillarray.length;i++){
+            fill.append($(`<p class='auto-item'> ${fillarray[i]}</p>`));
+        }
+    }
+   
+    $('#food').parents('.field').find('.auto-cont').empty().append(fill);
+
+});
+
+//testing
+
+$('body').on('click','.auto-item',(e)=>{
+    $('#food').val(e.currentTarget.innerHTML);
+    $('.auto-cont').empty();
+});
+
 $('body').on('click', '#exte', async () => {
-    await getFoodExternal('apple');
+    await getFoodExternal('california rolls');
     // await deleteWholeRecord(newjwt);
+    // await getAppid();
+    // await getKey();
+
+    // await getFoodAuto('ap');
 });
