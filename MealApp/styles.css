@@ -267,6 +267,12 @@ td{
     padding:1%;
     font-size: 15px;
 }
+
+
+#dateinputAnal{
+    padding:1%;
+    font-size: 15px;
+}
 .active{
     background-color:#f5d062;
     color:white;
@@ -296,4 +302,11 @@ p.has-background-success{
     border-bottom: 1px solid white;
     color:white;
     padding-left:20px;
+}
+
+#piechart{
+    width: 800px;
+    height:500px;
+    margin-left:25%;
+
 }
