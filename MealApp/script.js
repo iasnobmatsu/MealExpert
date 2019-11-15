@@ -686,11 +686,11 @@ $('body').on('click', '#addmeal', async () => {
 });
 
 
-//testing
+// testing
 
 $('body').on('click', '#exte', async () => {
     // await getFoodExternal('california rolls');
-    // await deleteWholeRecord(newjwt);
+    await deleteWholeRecord(newjwt);
     // await getAppid();
     // await getKey();
 
@@ -777,6 +777,7 @@ $('body').on('click', '#analysis', () => {
 });
 
 $('body').on('click', '#record', () => {
+    
     $('#analysis').parents('li').removeClass('active');
     $('#analysis').parents('li').removeClass('has-text-weight-bold');
     $('#record').parents('li').addClass('active');
@@ -855,6 +856,8 @@ let convN = {
 }
 
 export async function renderOneDayAnalysis(date) {
+    $('#nutrtablecont').empty();
+    $('#piechart').html("");
     let meal = await getMeals(newjwt, date);
     console.log(meal);
 
@@ -914,6 +917,7 @@ export function drawtable(dataArr) {
 
 
 $('body').on('change', '#dateinputAnal', async () => {
+
     let datearray = $('#dateinputAnal').val().match(/[0-9]*/g);
     let date = datearray.reduce(function reducer(acc, cur) {
         return acc + cur;
@@ -927,12 +931,29 @@ $('body').on('click','#own',()=>{
     // console.log( $('#own').parents('li'));
     $('#own').parents('li').addClass('is-active');
     $('#database').parents('li').removeClass('is-active');
+    let defaultdate = $('#dateinput').val();
+    let datearray = defaultdate.match(/[0-9]*/g);
+    let date = datearray.reduce(function reducer(acc, cur) {
+        return acc + cur;
+    }, "");
+    renderRecordOwn(defaultdate, date);
+    $('#own').parents('li').addClass('is-active');
+    $('#database').parents('li').removeClass('is-active');
 });
 
 $('body').on('click','#database',()=>{
     // console.log( $('#own').parents('li'));
     $('#own').parents('li').removeClass('is-active');
     $('#database').parents('li').addClass('is-active');
+    let defaultdate = $('#dateinput').val();
+    let datearray = defaultdate.match(/[0-9]*/g);
+    let date = datearray.reduce(function reducer(acc, cur) {
+        return acc + cur;
+    }, "");
+    renderRecord(defaultdate, date);
+    $('#own').parents('li').removeClass('is-active');
+    $('#database').parents('li').addClass('is-active');
+    
 });
 
 
@@ -1063,7 +1084,7 @@ export async function renderRecordOwn(defaultdate, today) {
 
         <div class="field is-grouped">
             <div class="control">
-                <button id='addmeal' class="button is-outlined is-link">Add</button>
+                <button id='addmeal2' class="button is-outlined is-link">Add</button>
             </div>
         </div>
 
@@ -1079,5 +1100,26 @@ export async function renderRecordOwn(defaultdate, today) {
 
     await rendermeals(newjwt, today);
 }
+
+$('body').on('click', '#addmeal2', async () => {
+    let datearray = $('#dateinput').val().match(/[0-9]*/g);
+    let date = datearray.reduce(function reducer(acc, cur) {
+        return acc + cur;
+    }, "");
+    let food = $('#food2').val();
+    let cal = $('#cal2').val();
+    let am = $('#amount2').val();
+    let carb=$('#carb2').val();
+    let fat=$('#fat2').val();
+    let protein=$('#protein2').val();
+    let fiber=$('#fiber2').val();
+    let nu={'FAT':parseInt(fat), 'FIBTG':parseInt(fiber),'PROCNT':parseInt(protein),'CHOCDF':parseInt(carb)};
+    let id='none';
+    let type = $('#type option:selected').text();
+    console.log(nu);
+    createAddMealRecordExt(newjwt, date, type, food, am, cal, nu, id);
+    // let meals = await getMeals(newjwt, 20191109);
+    // await rendermeals(newjwt, date);
+});
 
 
