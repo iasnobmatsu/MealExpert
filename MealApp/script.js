@@ -920,3 +920,164 @@ $('body').on('change', '#dateinputAnal', async () => {
     }, "");
     await renderOneDayAnalysis(date);
 });
+
+
+
+$('body').on('click','#own',()=>{
+    // console.log( $('#own').parents('li'));
+    $('#own').parents('li').addClass('is-active');
+    $('#database').parents('li').removeClass('is-active');
+});
+
+$('body').on('click','#database',()=>{
+    // console.log( $('#own').parents('li'));
+    $('#own').parents('li').removeClass('is-active');
+    $('#database').parents('li').addClass('is-active');
+});
+
+
+export async function renderRecordOwn(defaultdate, today) {
+
+
+
+    $('#root').empty();
+    $('#root').append($(`
+    <div class="menu">
+
+    <ul class="menu-list">
+        <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
+        <li><a>Planning</a></li>
+        <li><a id='analysis'>Analysis</a></li>
+    </ul>
+
+</div>
+
+
+
+<div class='container' id='appcont'>
+
+<h3 class='title has-text-centered'>Meal Expert</h3>
+
+<div id="selectdate" class="forms-body has-text-centered">
+    <div class="field">
+        <label class="label"> Select A Date to View Meals</label>
+        <p class="control has-text-centered has-icons-left">
+                <i class="fas fa-calendar-day"></i>
+            <input id='dateinput' type="date" value=${defaultdate}>
+
+        </p>
+
+    </div>
+</div>
+   
+
+    <div class='forms-body editform'>
+    <div class="tabs is-centered">
+  <ul>
+    <li class='has-text-small is-active'><a id='database'>Use Database</a></li>
+    <li class="has-text-small"><a id='own'>Create Your Own</a></li>
+   
+
+  </ul>
+</div>
+
+        <div class="field">
+            <label class="label"> Add Consumed Food Item:</label>
+            <p class="control has-icons-left">
+                <input id='food2' class="input" placeholder="Meal">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-utensils"></i>
+                </span>
+            </p>
+            <div class='auto-cont'></div>
+        </div>
+
+        <div class="field">
+            <label class="label"> Add Amount:</label>
+            <p class="control has-icons-left">
+                <input id='amount2' class="input" placeholder="Amount in grams">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-utensils"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+            <label class="label"> Add Calories:</label>
+            <p class="control has-icons-left">
+                <input id='cal2' class="input" placeholder="Calories">
+                <span class="icon is-small is-left">
+                    <i class="fas fa-utensils"></i>
+                </span>
+            </p>
+        </div>
+
+        <div class="field">
+        <label class="label"> Add Carbs:</label>
+        <p class="control has-icons-left">
+            <input id='carb2' class="input" placeholder="Carb">
+            <span class="icon is-small is-left">
+                <i class="fas fa-utensils"></i>
+            </span>
+        </p>
+        </div>
+
+        <div class="field">
+        <label class="label"> Add Fiber:</label>
+        <p class="control has-icons-left">
+            <input id='fiber2' class="input" placeholder="Fiber">
+            <span class="icon is-small is-left">
+                <i class="fas fa-utensils"></i>
+            </span>
+        </p>
+        </div>
+
+        <div class="field">
+        <label class="label"> Add Protein:</label>
+        <p class="control has-icons-left">
+            <input id='protein2' class="input" placeholder="Protein">
+            <span class="icon is-small is-left">
+                <i class="fas fa-utensils"></i>
+            </span>
+        </p>
+        </div>
+
+        <div class="field">
+        <label class="label"> Add Fat:</label>
+        <p class="control has-icons-left">
+            <input id='fat2' class="input" placeholder="Fat">
+            <span class="icon is-small is-left">
+                <i class="fas fa-utensils"></i>
+            </span>
+        </p>
+        </div>
+
+        <div class="select field">
+            <select id='type'>
+                <option>breakfast</option>
+                <option>lunch</option>
+                <option>dinner</option>
+                <option>other</option>
+            </select>
+        </div>
+
+        <div class="field is-grouped">
+            <div class="control">
+                <button id='addmeal' class="button is-outlined is-link">Add</button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id='rendercont'></div>
+    <button id='exte'>Add External</button>
+</div>`));
+
+
+
+
+    await rendermeals(newjwt, today);
+}
+
+
