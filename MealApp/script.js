@@ -631,20 +631,44 @@ export async function getNutExternal(food_item) {
     return result;
 }
 
-//autocomplete
-$('body').on('keyup', '#food', async () => {
+//debounce
+//ref
+//https://stackoverflow.com/questions/24004791/can-someone-explain-the-debounce-function-in-javascript
+export function debounce(callback, delay) {
+   
+    let timeout;
+    return function() {
+      
+      let context = this;
+      let args = arguments;
+      clearTimeout(timeout);
+      timeout = setTimeout(function() {
+        timeout = null;
+        callback.apply(context, args);
+      }, delay);
+    }
+  }
+  
+
+//autocomplete call back
+export async function autocomplete(){
     // console.log($('#food').val());
     let fillarray = await getFoodAuto($('#food').val());
+    
     let fill = $(`<div></div>`);
     if (fillarray.length != 0) {
         for (let i = 0; i < fillarray.length; i++) {
             fill.append($(`<p class='auto-item'> ${fillarray[i]}</p>`));
         }
     }
-
+    console.log(fillarray);
     $('#food').parents('.field').find('.auto-cont').empty().append(fill);
 
-});
+}
+
+
+//autocomplete w debouncing
+$('body').on('keyup', '#food', debounce(autocomplete,300));
 
 
 
