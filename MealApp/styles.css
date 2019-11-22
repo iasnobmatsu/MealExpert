@@ -2,6 +2,13 @@
     margin:0;
     padding:0;
 }
+
+#edamam-badge{
+    position:fixed;
+    bottom:0;
+    right:10px;
+    width:150px;
+}
     
 .circlePic{
     width: 30%;
@@ -307,6 +314,6 @@ p.has-background-success{
 #piechart{
     width: 800px;
     height:500px;
-    margin-left:25%;
+    margin-left:-10%;
 
 }

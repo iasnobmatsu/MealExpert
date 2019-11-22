@@ -1,15 +1,11 @@
 import Meal from "../meal.js";
-let newjwt;
-let useDatabase;
+
+
 $(document).ready(() => {
-    newjwt = '';
-    useDatabase = true;
     renderlogin();
     google.charts.load('current', {
         'packages': ['corechart']
     });
-    // google.charts.setOnLoadCallback(drawChart);
-
 
 });
 
@@ -245,7 +241,7 @@ export async function loginOnClick() {
     let defaultdate = "" + year + "-" + month + "-" + day;
 
     if (loginreturn != 'error') {
-        newjwt = loginreturn.data.jwt;
+        document.cookie = "newjwt="+loginreturn.data.jwt;
         await renderRecord(defaultdate, today);
 
     }
@@ -352,12 +348,13 @@ export async function renderRecord(defaultdate, today) {
     </div>
 
     <div id='rendercont'></div>
-    <button id='exte'>Add External</button>
+   
 </div>`));
 
 
 
-
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    // console.log(newjwt)
     await rendermeals(newjwt, today);
 }
 
@@ -519,6 +516,7 @@ $('body').on('change', '#dateinput', async () => {
     let date = datearray.reduce(function reducer(acc, cur) {
         return acc + cur;
     }, "");
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
     await rendermeals(newjwt, date);
 });
 
@@ -549,6 +547,8 @@ $('body').on('click', '.deletemeal', async (e) => {
     let date = e.target.dataset.date;
     let meal = e.target.dataset.meal;
     // console.log(date.slice(0,4)+'-'+date.slice(4,6)+'-'+date.slice(6,8));
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     await deleteOneMeal(newjwt, date, meal);
     await rendermeals(newjwt, date);
 
@@ -668,7 +668,7 @@ export async function autocomplete(){
 
 
 //autocomplete w debouncing
-$('body').on('keyup', '#food', debounce(autocomplete,300));
+$('body').on('keyup', '#food', debounce(autocomplete,200));
 
 
 
@@ -703,6 +703,8 @@ $('body').on('click', '#addmeal', async () => {
     let cal = $('#cal').val();
     let am = $('#amount').val();
     let type = $('#type option:selected').text();
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     // createAddMealRecord(newjwt, date, type, food, am, cal);
     createAddMealRecordExt(newjwt, date, type, food, am, cal, nutr, fid)
     // let meals = await getMeals(newjwt, 20191109);
@@ -714,6 +716,8 @@ $('body').on('click', '#addmeal', async () => {
 
 $('body').on('click', '#exte', async () => {
     // await getFoodExternal('california rolls');
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     await deleteWholeRecord(newjwt);
     // await getAppid();
     // await getKey();
@@ -748,9 +752,34 @@ export function drawChart(dataArr) {
 
 }
 
+export async function renderSimpMeals(jwt, date){
+    $('#rendercont').empty();
+    let meals = await getMeals(jwt, date);
+    let mealkeys = Object.keys(meals);
+    let cont = $(`<div id='meal-table'></div>`)
 
+    for (let i = 0; i < mealkeys.length; i++) {
+        let onemeal = $(`<table class='${mealkeys[i]}'>
+            <tr class="heading-table"><th>${mealkeys[i]}</th><td>calories</td><td>amount</td></tr></table>`);
+        for (let j = 0; j < meals[mealkeys[i]].items.length; j++) {
+            onemeal.append($(`<tr>
+            <th>${meals[mealkeys[i]].items[j].food}</th>
+            <td>${meals[mealkeys[i]].items[j].calorie} cal</td>
+            <td>${meals[mealkeys[i]].items[j].amount} grams</td>
+            </tr>`))
+        }
+        cont.append(onemeal);
+        
+    }
+    $('#rendercont').append(cont);
+    
+
+
+
+
+}
 //switch tabs--------------
-$('body').on('click', '#analysis', () => {
+$('body').on('click', '#analysis', async() => {
 
     $('#analysis').parents('li').addClass('active');
     $('#analysis').parents('li').addClass('has-text-weight-bold');
@@ -788,6 +817,8 @@ $('body').on('click', '#analysis', () => {
     </div>
     
     <div id='nutrtablecont'></div>
+    <div id="piechart"></div>
+    <div id='rendercont'></div>
     `));
     let datearray = defaultdate.match(/[0-9]*/g);
     let date = datearray.reduce(function reducer(acc, cur) {
@@ -796,6 +827,8 @@ $('body').on('click', '#analysis', () => {
 
 
     renderOneDayAnalysis(date);
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    await renderSimpMeals(newjwt, date);
 
 
 });
@@ -882,6 +915,8 @@ let convN = {
 export async function renderOneDayAnalysis(date) {
     $('#nutrtablecont').empty();
     $('#piechart').html("");
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     let meal = await getMeals(newjwt, date);
     console.log(meal);
 
@@ -898,9 +933,9 @@ export async function renderOneDayAnalysis(date) {
 
             for (let a = 0; a < nutkeys.length; a++) {
                 if (Object.keys(nudic).includes(nutkeys[a])) {
-                    nudic[nutkeys[a]] = nudic[nutkeys[a]] + parseInt(nutrs[nutkeys[a]]) * amt * conv[nutkeys[a]] / 100;
+                    nudic[nutkeys[a]] = nudic[nutkeys[a]] + parseFloat(nutrs[nutkeys[a]]) * amt * conv[nutkeys[a]] / 100;
                 } else {
-                    nudic[nutkeys[a]] = parseInt(nutrs[nutkeys[a]]) * amt * conv[nutkeys[a]] / 100;
+                    nudic[nutkeys[a]] = parseFloat(nutrs[nutkeys[a]]) * amt * conv[nutkeys[a]] / 100;
                 }
             }
 
@@ -919,9 +954,6 @@ export async function renderOneDayAnalysis(date) {
     //  console.log(dataArr);
 
     drawChart(dataArr);
-
-    dataArr.push(['Calories', nudic['ENERC_KCAL']]);
-
     drawtable(dataArr);
 
 }
@@ -947,6 +979,8 @@ $('body').on('change', '#dateinputAnal', async () => {
         return acc + cur;
     }, "");
     await renderOneDayAnalysis(date);
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    await renderSimpMeals(newjwt, date);
 });
 
 
@@ -1116,12 +1150,13 @@ export async function renderRecordOwn(defaultdate, today) {
     </div>
 
     <div id='rendercont'></div>
-    <button id='exte'>Add External</button>
+    
 </div>`));
 
 
 
-
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     await rendermeals(newjwt, today);
 }
 
@@ -1141,6 +1176,8 @@ $('body').on('click', '#addmeal2', async () => {
     let id='none';
     let type = $('#type option:selected').text();
     console.log(nu);
+    let newjwt=document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     createAddMealRecordExt(newjwt, date, type, food, am, cal, nu, id);
     // let meals = await getMeals(newjwt, 20191109);
     // await rendermeals(newjwt, date);
