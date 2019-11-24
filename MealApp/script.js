@@ -1084,10 +1084,10 @@ export async function renderOneDayAnalysis(date) {
     let nudic = {};
     //   let nkarr=;
     let mealkeys = Object.keys(meal);
-    let calore_t=0;
+    let calorie_t=0;
     for (let i = 0; i < mealkeys.length; i++) {
         for (let j = 0; j < meal[mealkeys[i]].items.length; j++) {
-            calorie_t+=meal[mealkeys[i]].item[j].calorie;
+            calorie_t+=parseInt(meal[mealkeys[i]].items[j].calorie);
             let item = meal[mealkeys[i]].items[j];
             let amt = item.amount;
             let nutrs = item.nutrients;
@@ -1118,7 +1118,9 @@ export async function renderOneDayAnalysis(date) {
     //  console.log(dataArr);
 
     drawChart(dataArr);
+    dataArr.push(['calories', calorie_t]);
     drawtable(dataArr);
+    
 
 }
 
@@ -1495,6 +1497,21 @@ $('body').on('click', '.edit-recipe', (e)=>{
 
 });
 
+$('body').on('click','.cancel-rbutton2', async(e)=>{
+
+    $('#appcont').empty().append($(`<h3 class='title has-text-centered'>Meal Expert</h3>`));
+    $('#appcont').append($(`<button class="button is-outlined is-info" id="instb">Write Recipe</button>`))
+    $('#appcont').append("<div id='rformcont'></div>");
+    $('#appcont').append("<div id='rcont'></div>");
+    
+    let newjwt = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    // await deleteWholeRecord(jwt);
+    // let recs=await getRecipe(newjwt);
+    await getRecipeKeys(newjwt);
+    renderRecipe(newjwt);
+
+});
+
 $('body').on('click', '#addrecipe2',async (e)=>{
     let name=$('#rname').val();
     let rec=new Recipe(name);
@@ -1508,6 +1525,8 @@ $('body').on('click', '#addrecipe2',async (e)=>{
     let uname=userinfo.user.name;
     let id=e.target.dataset.id;
     await changeRecipe(newjwt,id, rec,uname);
+
+
     $('#appcont').empty().append($(`<h3 class='title has-text-centered'>Meal Expert</h3>`));
     $('#appcont').append($(`<button class="button is-outlined is-info" id="instb">Write Recipe</button>`))
     $('#appcont').append("<div id='rformcont'></div>");
@@ -1518,10 +1537,6 @@ $('body').on('click', '#addrecipe2',async (e)=>{
     // let recs=await getRecipe(newjwt);
     await getRecipeKeys(newjwt);
     renderRecipe(newjwt);
-
-
-
-
 
 });
 
