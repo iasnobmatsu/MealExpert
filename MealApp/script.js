@@ -601,13 +601,48 @@ $('body').on('click', '.editmeal', async (e) => {
     console.log(a);
     tabler.empty().append($(`
     <th>${head}</th>
-    <td><input id='changec' value=${c} type='text'></td>
-    <td><input id='changea' value=${a} type='text'></td>
+    <td><input data-date=${date} data-meal=${meal} id='changec' value=${c} type='text'></td>
+    <td><input data-date=${date} data-meal=${meal} id='changea' value=${a} type='text'></td>
     <td><a data-date=${date} data-meal=${meal} class='is-link saveeditedmeal'>save</a></td>
     `));
+});
 
+$('body').on('keyup', '#changea', async(e)=>{
+    let date = e.target.dataset.date;
+    let meal = e.target.dataset.meal;
+    let newjwt = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    let meals=await getOneMeal(date,meal,newjwt);
+    let tabler=$(e.target).parents('tr');
+    let head=tabler.find('th').text();
+    let items=meals.items;
+    for (let i=0;i<items.length;i++){
+        if (items[i].food==head){
+            // console.log(head);
+            let ene=parseFloat(items[i].calorie)/parseFloat(items[i].amount);
+            console.log(ene);
+            $('#changec').val(Math.floor(ene*parseInt($('#changea').val())));
+        }
+    }
 
-    
+});
+
+$('body').on('keyup', '#changec', async(e)=>{
+    let date = e.target.dataset.date;
+    let meal = e.target.dataset.meal;
+    let newjwt = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    let meals=await getOneMeal(date,meal,newjwt);
+    let tabler=$(e.target).parents('tr');
+    let head=tabler.find('th').text();
+    let items=meals.items;
+    for (let i=0;i<items.length;i++){
+        if (items[i].food==head){
+            // console.log(head);
+            let ene=parseFloat(items[i].calorie)/parseFloat(items[i].amount);
+            console.log(ene);
+            $('#changea').val(Math.floor(parseFloat($('#changec').val())/(ene)));
+        }
+    }
+
 });
 
 $('body').on('click', '.saveeditedmeal', async (e) => {
@@ -623,7 +658,7 @@ $('body').on('click', '.saveeditedmeal', async (e) => {
     let items=meals.items;
     for (let i=0;i<items.length;i++){
         if (items[i].food==head){
-            console.log(head);
+            // console.log(head);
             
             items[i].calorie=$('#changec').val();
             items[i].amount=$('#changea').val();
@@ -637,6 +672,8 @@ $('body').on('click', '.saveeditedmeal', async (e) => {
 
 
 });
+
+
 
 
 //=======================================================================================
