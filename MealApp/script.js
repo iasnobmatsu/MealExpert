@@ -1084,8 +1084,10 @@ export async function renderOneDayAnalysis(date) {
     let nudic = {};
     //   let nkarr=;
     let mealkeys = Object.keys(meal);
+    let calore_t=0;
     for (let i = 0; i < mealkeys.length; i++) {
         for (let j = 0; j < meal[mealkeys[i]].items.length; j++) {
+            calorie_t+=meal[mealkeys[i]].item[j].calorie;
             let item = meal[mealkeys[i]].items[j];
             let amt = item.amount;
             let nutrs = item.nutrients;
@@ -1111,6 +1113,7 @@ export async function renderOneDayAnalysis(date) {
             dataArr.push([convN[Object.keys(nudic)[i]], nudic[Object.keys(nudic)[i]] / 1000000]);
         }
     }
+    
 
     //  console.log(dataArr);
 
