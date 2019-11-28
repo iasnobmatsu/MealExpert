@@ -228,10 +228,11 @@ body {
 
 }
 
-.menu li{
+.menu .menu-list li{
     border-bottom:1px #f3af4a solid;
+    color:#b96f00;
 }
-.menu a{
+.menu .menu-list a{
     color:#b96f00;
 }
 #appcont{
@@ -293,11 +294,11 @@ td{
     padding:1%;
     font-size: 15px;
 }
-.active{
+.menu .menu-list .active a{
     background-color:#f5d062;
     color:white;
 }
-.active a{
+.menu .menu-list .active #messageboardtoggle{
     color:white;
 }
 
@@ -327,20 +328,19 @@ p.has-background-success{
 #piechart{
     width: 800px;
     height:500px;
-    margin-left:-10%;
+    margin-left:10%;
 
 }
 
 #messageboard{
     position:relative;
-    padding-top:20px;
-    width:50%;
-    margin-left:25%;
+    padding-top:10px;
     text-align: center;
 }
 
 #post{
     padding:20px;
+}
 .recipeform textarea{
     width:500px;
     height:300px;
@@ -367,15 +367,20 @@ p.has-background-success{
 }
 
 .one-recipe{
-    border:2px solid rgb(255, 223, 119);
+    border:2px solid rgb(119, 119, 119);
     margin:5px;
-    margin-bottom:20px;
-    padding:10px;
+    margin-bottom:40px;
+    padding:5%;
+    color:rgb(0, 0, 0);
     border-radius:7px;
+}
+
+.one-recipe b{
+    color: rgb(194, 132, 17);
 }
 .one-recipe:hover{
     border:2px solid white;
-    background-color: #faf5e4;
+    background-color:rgb(241, 240, 237);
 }
 .oneing{
     margin-top:10px;
@@ -397,4 +402,47 @@ p.has-background-success{
     width:30%;
     margin-left:35%;
 }
+#new-mess{
+    margin:2%;
+}
 
+#new-mess textarea{
+    width:80%;
+    height:200px;
+    border-radius:5px;
+    padding:10px
+}
+
+#new-mess-added{
+    margin:2%;
+}
+#new-mess-added input{
+    width:80%;
+    height:30px;
+    margin-bottom:2%;
+}
+
+.one-mess{
+    text-align: left;
+    margin-bottom:20px;
+    background-color:rgb(248, 248, 248);
+    padding:2%;
+    color:rgb(0, 0, 0);
+    border-radius: 5px;
+}
+
+.one-mess:hover{
+    background-color:white;
+}
+
+.one-mess b{
+    color: rgb(194, 132, 17);
+}
+
+textarea{
+    font-size: 15px;
+}
+
+.one-mess input{
+    height:30px;
+}
