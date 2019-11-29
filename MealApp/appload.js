@@ -16,6 +16,7 @@ $(document).ready(async () => {
         step = 'none';
     } else {
         step = window.location.href.match(/\=[a-z]*/)[0].match(/[a-z]+/)[0];
+        console.log(step)
     }
 
 
@@ -26,6 +27,23 @@ $(document).ready(async () => {
             break;
         case "recipe":
             if (document.cookie.length > 6) {
+
+
+                    $('#root').append($(`<div class="menu">
+
+                    <ul class="menu-list">
+                        <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
+                        <li><a id='analysis'>Analysis</a></li>
+                        <li><a id='recipe'>Recipe</a></li>
+                        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+                        <li><a id='logout'>Logout</a></li>
+                    </ul>
+                
+                </div>
+                
+                
+                
+                <div class='container' id='appcont'>`));
                 
                 let today = new Date();
                 let year = today.getFullYear();
@@ -39,7 +57,7 @@ $(document).ready(async () => {
                 }
                 today = '' + year + month + day;
                 let defaultdate = "" + year + "-" + month + "-" + day;
-                await renderRecord(defaultdate, today);
+                // await renderRecord(defaultdate, today);
 
                 $('#recipe').parents('li').addClass('active');
                 $('#recipe').parents('li').addClass('has-text-weight-bold');
@@ -87,6 +105,24 @@ $(document).ready(async () => {
             break;
         case "analysis":
                 if (document.cookie.length > 6) {
+
+                    $('#root').append($(`<div class="menu">
+
+                    <ul class="menu-list">
+                        <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
+                        <li><a id='analysis'>Analysis</a></li>
+                        <li><a id='recipe'>Recipe</a></li>
+                        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+                        <li><a id='logout'>Logout</a></li>
+                    </ul>
+                
+                </div>
+                
+                
+                
+                <div class='container' id='appcont'>`));
+
+
                     let today = new Date();
                     let year = today.getFullYear();
                     let month = today.getMonth() + 1;
@@ -99,7 +135,7 @@ $(document).ready(async () => {
                     }
                     today = '' + year + month + day;
                     let defaultdate = "" + year + "-" + month + "-" + day;
-                    await renderRecord(defaultdate, today);
+                    // await renderRecord(defaultdate, today);
     
                     $('#analysis').parents('li').addClass('active');
                     $('#analysis').parents('li').addClass('has-text-weight-bold');
