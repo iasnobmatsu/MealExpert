@@ -523,7 +523,7 @@ export async function autocomplete() {
             fill.append($(`<p class='auto-item'> ${fillarray[i]}</p>`));
         }
     }
-    // console.log(fillarray);
+    console.log(fillarray);
     $('#food').parents('.field').find('.auto-cont').empty().append(fill);
 
 }

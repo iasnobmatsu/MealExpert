@@ -6,6 +6,7 @@ function messageboard() {
         <li><a id='analysis' data-step='analysis'>Analysis</a></li>
         <li><a id='recipe' data-step='recipe'>Recipe</a></li>
         <li class='active has-text-weight-bold'><a id='messageboardtoggle'>FoodBoard</a></li>
+
     </ul>
 </div>
 
@@ -231,6 +232,9 @@ $(document).ready(async()=>{
         $('.menu-list').append(
             " <li><a id='logout'>Logout</a></li> "
         )
+    }else{
+        $('.menu-list').append(
+        "<li ><a href='app.html' id='loginnav'>Login</a></li>");
     }
     await load();
 });
