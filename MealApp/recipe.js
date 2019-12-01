@@ -95,9 +95,9 @@ $('body').on('click', '.delete-recipe', async(e)=>{
 $('body').on('click', '.edit-recipe', (e)=>{
     let rid=e.target.dataset.id;
     let parent=$(e.target).parents('.one-recipe');
-    let name=parent.find('.rec-name').text().split(':')[1];
+    let name=parent.find('.rec-name').text();
     let ins=parent.find('.rec-ins').text().split(':')[1];
-    // console.log(name);
+    console.log(name);
     
     $(e.target).parents('.one-recipe').replaceWith($(`
     
@@ -300,7 +300,7 @@ export async function renderRecipe(jwt){
         <div class='one-recipe'>
             
             <p class='rec-name'> ${name}</p>
-            <p class='rec-author'> by <span> ${user}</span></p>
+            <p class='rec-author'> by <span>${user}</span></p>
             <p class='rec-ins'><b>Recipe Instruction:</b> ${ins}</p>
             
         </div>
@@ -310,7 +310,7 @@ export async function renderRecipe(jwt){
         obj.append(oner);
     }
 
-    $('#rcont').append(obj);
+    $('#rcont').empty().append(obj);
 }
 
 export async function getRecipe(jwt, id){
@@ -417,7 +417,63 @@ export async function getUserStatus(jwt) {
 }
 
 
-$('body').on('click','.rec-author span', (e)=>{
+$('body').on('click','.rec-author span', async(e)=>{
     let author=$(e.target).text();
-    console.log(author);
+    let newjwt = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    let recipekeys=await getRecipeKeys(newjwt);
+
+    let obj=$(`<div class='show-recipe'></div>`);
+    for (let i=recipekeys.length-1;i>=0;i--){
+        let recipes=await getRecipe(newjwt,recipekeys[i]);
+        if (recipes[0]["user"]==author){
+            console.log(recipes[0]);
+
+            let user=recipes[0].user;
+        let name=recipes[0].recipe.name;
+
+        let ingrs=recipes[0].recipe.ingredients;
+        let ingrss=$(`<div class='all-ingrs'><div class='oneing'><p class='ing-name'><b>Ingredient</b></p>
+        <p class='ing-amount'><b>Amount</b></p></div></div>`);
+        for (let j=0;j<ingrs.length;j++){
+            ingrss.append($(`<div class='oneing'><p class='ing-name'>${ingrs[j].ingredient}</p>
+            <p class='ing-amount'>${ingrs[j].amount}</p></div>`))
+        }
+        let ins=recipes[0].recipe.instruction;
+
+       
+        let userinfo=await getUserStatus(newjwt);
+        let uname=userinfo.user.name;
+        let bs='';
+        if (uname==user){
+            bs=$(` <button data-id=${recipekeys[i]} class='button is-info is-outlined edit-recipe'>edit</button>
+            <button data-id=${recipekeys[i]} class='button is-danger is-outlined delete-recipe'>delete</button>`);
+        }
+        let oner=$(`
+        <div class='one-recipe'>
+            
+            <p class='rec-name'> ${name}</p>
+            <p class='rec-author'> by <span>${user}</span></p>
+            <p class='rec-ins'><b>Recipe Instruction:</b> ${ins}</p>
+            
+        </div>
+        `);
+        oner.append(ingrss);
+        oner.append(bs);
+        obj.append(oner);
+        }
+    }
+    $('#rcont').empty().append(obj);
+    $('#rcont').prepend($(`
+    <p class='sing-user'>${author}'s recipes</p>
+    `));
+    $('#rcont').append($(`
+    <button class='button backrecipe is-outlined is-info'>back</button>
+    `));
+
+        
+});
+
+$('body').on('click','.backrecipe', async(e)=>{
+    let newjwt = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    renderRecipe(newjwt);
 });
