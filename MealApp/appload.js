@@ -153,7 +153,7 @@ $(document).ready(async () => {
                 
                     <div id="selectdate" class="forms-body has-text-centered">
                         <div class="field">
-                            <label class="label"> Select A Date to View Meals</label>
+                            <label class="label"> Select A Date to View Nutritions</label>
                             <p class="control has-text-centered has-icons-left">
                                     <i class="fas fa-calendar-day"></i>
                                 <input id='dateinputAnal' type="date" value=${defaultdate}>

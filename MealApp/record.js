@@ -673,6 +673,7 @@ export async function renderRecordOwn(defaultdate, today) {
         <li><a id='analysis'>Analysis</a></li>
         <li><a id='recipe'>Recipe</a></li>
         <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+        <li><a id='logout'>Logout</a></li>
     </ul>
 
 </div>

@@ -14,7 +14,7 @@ export function renderlogin() {
                 <div class="field">
                     <label class="label">Username</label>
                     <div class="control has-icons-left has-icons-right">
-                        <input id='login-username' class="input" type="email" placeholder="Input Email" value="">
+                        <input id='login-username' class="input" type="email" placeholder="Input Username" value="">
                         <span class="icon is-small is-left">
                             <i class="fas fa-user"></i>
                         </span>

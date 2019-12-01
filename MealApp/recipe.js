@@ -299,8 +299,8 @@ export async function renderRecipe(jwt){
         let oner=$(`
         <div class='one-recipe'>
             
-            <p class='rec-name'><b>Recipe Name:</b> ${name}</p>
-            <p class='rec-author'><b>Recipe Author:</b> ${user}</p>
+            <p class='rec-name'> ${name}</p>
+            <p class='rec-author'> by <span> ${user}</span></p>
             <p class='rec-ins'><b>Recipe Instruction:</b> ${ins}</p>
             
         </div>
@@ -416,3 +416,8 @@ export async function getUserStatus(jwt) {
     }
 }
 
+
+$('body').on('click','.rec-author span', (e)=>{
+    let author=$(e.target).text();
+    console.log(author);
+});

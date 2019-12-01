@@ -5,6 +5,7 @@
 
 html {
     height: 100%;
+    word-wrap: break-word;
 }
 
 #edamam-badge {
@@ -16,11 +17,11 @@ html {
 
 .main {
     display: flex;
-    height: 50%;
+    height: 50vh;
 }
 
 .header1 {
-    height: 50%;
+    height: 50vh;
     border: 1px solid white;
     /* background-color: white; */
     background-image: url("../assets/background2.png");
@@ -76,11 +77,14 @@ body {
     position:absolute;
     top:0;
     width: 100vw;
-    height: 100vh;
+    min-height:100vh;
     margin: 0%;
     padding: 0%;
-    background-image: url("../assets/background2.png");
+    background-image: url("../assets/background.png");
     background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+   
 }
 
 .record {
@@ -127,7 +131,7 @@ body {
     display: block;
     margin: auto;
     position: relative;
-    top: 200px;
+    top: 150px;
     border: 5px solid #2f587c;
     padding-bottom: 2%;
     border-radius: 10px;
@@ -160,31 +164,37 @@ body {
 
 
 .menu {
-    width: 20%;
+    width: 18%;
     margin-left: 2%;
-    /* background-color: #f3af4a; */
+    
     margin-top: 50px;
     position: fixed;
     border-radius: 10px;
+    text-align: center;
 
 
 }
 
 .menu .menu-list li {
-    border-bottom: 1px #f3af4a solid;
-    color: #b96f00;
+    border-bottom: 1px #2f587c solid;
+    color: #2f587c ;
+    background-color: rgba(255,255,255,0.8);
 }
 
 .menu .menu-list a {
-    color: #b96f00;
+    color: #2f587c ;
+   
 }
 
 #appcont {
-    position: relative;
+    /* position: relative; */
     padding-top: 20px;
-    width: 50%;
+    width: 55%;
     margin-left: 25%;
-    /* background-color: #f3af4a; */
+    background-color: rgba(255,255,255,0.8);
+    min-height:100vh;
+    padding:2%;
+    
 }
 
 table {
@@ -194,7 +204,9 @@ table {
     margin-left: 4%;
     width: 95%;
     margin-bottom: 2%;
+    border:1px solid #2f587c;
 }
+
 
 
 
@@ -207,15 +219,32 @@ table {
 
 }
 
+/* button.is-outlined.is-small.is-danger{
+    background-color: white ;
+}
+button.is-outlined.is-small.is-info{
+    background-color: white ;
+} */
+
+
+
 
 .meals-cont {
     margin-bottom: 4%;
 }
 
-th {
+table tbody th {
     width: 50%;
+    color:black;
     padding: 1%;
-    border-right: 1px solid #d68102;
+    border-right: 1px solid #81a6dd;
+}
+
+table .heading-table th {
+    width: 50%;
+    color:white;
+    padding: 1%;
+    border-right: 1px solid #81a6dd;
 }
 
 td {
@@ -223,12 +252,13 @@ td {
 }
 
 .heading-table {
-    border-bottom: 1px solid #d68205;
+    border-bottom: 1px solid #81a6dd;
     width: 100%;
     /* background-color: #f5d062; */
-    background: linear-gradient(to right, #fdc830, #f37335);
-    /* margin-top: 2%; */
+    background-color: #2f587c;
+    color:white;
 }
+
 
 #nutrtablecont {
     margin-top: 5%;
@@ -247,7 +277,7 @@ td {
 
 .menu .menu-list .active a {
     /* background-color: #f5d062; */
-    background: linear-gradient(to right, #fdc830, #f37335);
+    background: #2f587c ;
     color: white;
 }
 
@@ -279,12 +309,12 @@ p.has-background-success {
     color: white;
     padding-left: 20px;
 }
-
-#piechart {
-    width: 800px;
-    height: 500px;
-    margin-left: 10%;
-
+#piechart{
+    /* width:100%; */
+    height:50vh;
+}
+#piechart rect{
+  display:none;
 }
 
 #messageboard {
@@ -323,8 +353,9 @@ p.has-background-success {
 }
 
 .one-recipe {
-    border: 2px solid rgb(119, 119, 119);
+    /* border: 2px solid #2F587C; */
     margin: 5px;
+    background-color: white;
     margin-bottom: 40px;
     padding: 5%;
     color: rgb(0, 0, 0);
@@ -332,12 +363,11 @@ p.has-background-success {
 }
 
 .one-recipe b {
-    color: rgb(194, 132, 17);
+    color: rgb(73, 137, 192);
 }
 
 .one-recipe:hover {
-    border: 2px solid white;
-    background-color: rgb(241, 240, 237);
+    background-color:rgb(245, 245, 245);
 }
 
 .oneing {
@@ -390,6 +420,8 @@ p.has-background-success {
     padding: 2%;
     color: rgb(0, 0, 0);
     border-radius: 5px;
+    width:27%;
+    margin:2%;
 }
 
 .one-mess:hover {
@@ -406,4 +438,23 @@ textarea {
 
 .one-mess input {
     height: 30px;
+}
+
+.rec-name{
+    font-size:200%;
+}
+
+.rec-author span{
+    font-size:140%;
+    color:rgb(117, 168, 212);
+}
+.rec-ins{
+    margin-top:20px;
+}
+
+#main_content{
+    display:flex;
+    flex-direction:row;
+    flex-wrap:wrap;
+    justify-content:center;
 }
