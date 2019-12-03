@@ -179,7 +179,7 @@ body {
 .menu .menu-list li {
     border-bottom: 1px #2f587c solid;
     color: #2f587c ;
-    background-color: rgba(255,255,255,0.8);
+    background-color: rgba(255,255,255,0.9);
 }
 
 .menu .menu-list a {
@@ -192,7 +192,7 @@ body {
     padding-top: 20px;
     width: 55%;
     margin-left: 25%;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.9);
     min-height:100vh;
     padding:2%;
     
