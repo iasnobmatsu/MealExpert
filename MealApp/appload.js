@@ -18,15 +18,18 @@ $(document).ready(async () => {
         step = window.location.href.match(/\=[a-z]*/)[0].match(/[a-z]+/)[0];
         console.log(step)
     }
-
-
+    // let islogin = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    // console.log(islogin);
+    let islogin = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
     switch (step) {
         case "none":
             document.cookie = "newjwt=;expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"; //delete cookie
             renderlogin();
             break;
         case "recipe":
-            if (document.cookie.length > 6) {
+           
+            if (islogin!='') {
 
 
                     $('#root').append($(`<div class="menu">
@@ -35,7 +38,7 @@ $(document).ready(async () => {
                         <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
                         <li><a id='analysis'>Analysis</a></li>
                         <li><a id='recipe'>Recipe</a></li>
-                        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+                        <li><a id='messageboardtoggle' href='messageboard.html'>Foodboard</a></li>
                         <li><a id='logout'>Logout</a></li>
                     </ul>
                 
@@ -84,7 +87,9 @@ $(document).ready(async () => {
             }
             break;
         case "record":
-            if (document.cookie.length > 6) {
+            // let islogin = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
+            if (islogin!='') {
                 
                 let today = new Date();
                 let year = today.getFullYear();
@@ -104,7 +109,9 @@ $(document).ready(async () => {
             }
             break;
         case "analysis":
-                if (document.cookie.length > 6) {
+                // let islogin = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
+                if (islogin!='') {
 
                     $('#root').append($(`<div class="menu">
 
@@ -112,7 +119,7 @@ $(document).ready(async () => {
                         <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
                         <li><a id='analysis'>Analysis</a></li>
                         <li><a id='recipe'>Recipe</a></li>
-                        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+                        <li><a id='messageboardtoggle' href='messageboard.html'>Foodboard</a></li>
                         <li><a id='logout'>Logout</a></li>
                     </ul>
                 

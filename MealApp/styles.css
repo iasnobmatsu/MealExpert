@@ -12,7 +12,7 @@ html {
     position: fixed;
     bottom: 0;
     right: 10px;
-    width: 150px;
+    width: 100px;
 }
 
 .main {
@@ -25,6 +25,7 @@ html {
     border: 1px solid white;
     /* background-color: white; */
     background-image: url("../assets/background2.png");
+    /* Photo by Ella Olsson from Pexels */
     background-size: cover;
     z-index: -1;
     border-bottom:5px white solid;
@@ -59,14 +60,14 @@ html {
     padding-top:8%;
 }
 
-.four a{
+.four a h3{
     text-decoration: none;
     color: white;
     font-size: 300%;
     text-align:center;
     font-family: 'Satisfy', cursive;
 }
-.four a:hover{
+.four a h3:hover{
     /* color:black; */
     font-size: 350%;
 }
@@ -474,4 +475,66 @@ button.backrecipe{
 
 span{
     cursor: default;
+}
+
+#PhotoEllaOlsson{
+    position:absolute;
+    top:3px;
+    left:3px;
+    text-decoration: none;
+    color:white;
+    font-size:80%;
+    padding:1px;
+
+}
+
+a#PhotoPixabay{
+    font-family: 'Times New Roman', Times, serif;
+    font-size:70%;
+    color:white;
+    position: absolute;
+    bottom:3px;
+    opacity:0.5;
+    text-align:left;
+}
+
+a#PhotoPixabay2{
+    font-family: 'Times New Roman', Times, serif;
+    font-size:70%;
+    color:white;
+    position: absolute;
+    bottom:3px;
+    opacity:0.5;
+    text-align:left;
+}
+a#PhotoSnapwire{
+    font-family: 'Times New Roman', Times, serif;
+    font-size:70%;
+    color:white;
+    position: absolute;
+    bottom:3px;
+    opacity:0.5;
+    text-align:left;
+}
+
+a#PhotoLina{
+    font-family: 'Times New Roman', Times, serif;
+    font-size:70%;
+    color:white;
+    position: absolute;
+    bottom:3px;
+    opacity:0.5;
+    text-align:left;
+}
+
+#PhotoEllaOlssonBack{
+    position:fixed;
+    top:3px;
+    right:3px;
+    text-decoration: none;
+    color:black;
+    font-size:80%;
+    padding:1px;
+    opacity:0.5;
+
 }

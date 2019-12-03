@@ -8,7 +8,7 @@ export async function renderRecord(defaultdate, today) {
         <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
         <li><a id='analysis'>Analysis</a></li>
         <li><a id='recipe'>Recipe</a></li>
-        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+        <li><a id='messageboardtoggle' href='messageboard.html'>Foodboard</a></li>
         <li><a id='logout'>Logout</a></li>
     </ul>
 
@@ -672,7 +672,7 @@ export async function renderRecordOwn(defaultdate, today) {
         <li class='active has-text-weight-bold'><a id='record'>Record</a></li>
         <li><a id='analysis'>Analysis</a></li>
         <li><a id='recipe'>Recipe</a></li>
-        <li><a id='messageboardtoggle' href='messageboard.html'>Messageboard</a></li>
+        <li><a id='messageboardtoggle' href='messageboard.html'>Foodboard</a></li>
         <li><a id='logout'>Logout</a></li>
     </ul>
 

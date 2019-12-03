@@ -228,7 +228,9 @@ export const deleteMessages = async function () {
 $(document).ready(async()=>{
 
     $('body').append(messageboard());
-    if (document.cookie.length>6){
+    let islogin = document.cookie.replace(/(?:(?:^|.*;\s*)newjwt\s*\=\s*([^;]*).*$)|^.*$/, "$1");
+    
+    if (islogin!=''){
         $('.menu-list').append(
             " <li><a id='logout'>Logout</a></li> "
         )
