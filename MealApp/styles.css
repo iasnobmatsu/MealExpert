@@ -343,9 +343,10 @@ p.has-background-success {
 
 .ingform {
     margin-bottom: 10px;
-    background-color: rgb(250, 237, 196);
+    background-color: rgb(255, 255, 255);
     padding: 5%;
     border-radius: 10px;
+    /* border:1px solid black; */
 
 }
 
@@ -537,4 +538,11 @@ a#PhotoLina{
     padding:1px;
     opacity:0.5;
 
+}
+
+#ingrb{
+    background-color:white;
+}
+#ingrb:hover{
+    background-color:rgb(47, 148, 243);
 }
